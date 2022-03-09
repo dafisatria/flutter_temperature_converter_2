@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:flutter_temperature_converter_2/widgets/hasilKonversiSuhu.dart';
+import 'package:flutter_temperature_converter_2/widgets/inputSuhu.dart';
+import 'package:flutter_temperature_converter_2/widgets/riwayatSuhu.dart';
+import 'package:flutter_temperature_converter_2/widgets/targetKonversiSuhu.dart';
+import 'package:flutter_temperature_converter_2/widgets/tombolKonversiSuhu.dart';
 
 void main() {
   runApp(const MyApp());
@@ -14,6 +18,42 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   TextEditingController etInput = TextEditingController();
+  List<String> listSatuanSuhu = ['Kelvin', 'Reamur', 'Fahrenheit'];
+  String selectedDropDown = 'Kelvin';
+  int hasilPerhitungan = 0;
+  List listHasil = [];
+
+  void onDropDownChanged(Object? value) {
+    return setState(() {
+      selectedDropDown = value.toString();
+    });
+  }
+
+  void konversiSuhu() {
+    return setState(() {
+      if (etInput.text.isNotEmpty) {
+        switch (selectedDropDown) {
+          case 'Kelvin':
+            hasilPerhitungan = int.parse(etInput.text) + 273;
+            break;
+          case 'Reamur':
+            hasilPerhitungan = (4 * int.parse(etInput.text) / 5) as int;
+            break;
+          case 'Fahrenheit':
+            hasilPerhitungan = (9 * int.parse(etInput.text) / 5) as int;
+            break;
+          default:
+        }
+        listHasil.add("Konversi dari " +
+            etInput.text +
+            " Celcius ke " +
+            selectedDropDown +
+            "dengan hasil : " +
+            hasilPerhitungan.toString());
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -24,59 +64,30 @@ class _MyAppState extends State<MyApp> {
       ),
       home: Scaffold(
         appBar: AppBar(
-          title: Text('Konverter Suhu'),
+          title: const Text('Konverter Suhu'),
         ),
         body: Container(
-          margin: EdgeInsets.all(8.0),
+          margin: const EdgeInsets.all(8.0),
           child: Column(
             children: [
-              TextField(
-                controller: etInput,
-                decoration: InputDecoration(
-                    labelText: "Celcius",
-                    hintText: "Masukkan suhu dalam satuan celcius"),
-                keyboardType: TextInputType.number,
-                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              inputSuhu(etInput: etInput),
+              targetKonversiSuhu(
+                selectedDropDown: selectedDropDown,
+                listSatuanSuhu: listSatuanSuhu,
+                onDropDownChanged: onDropDownChanged,
               ),
-              DropdownButton(
-                value: 'Kelvin',
-                items: [
-                  DropdownMenuItem(
-                    child: Text('Kelvin'),
-                    value: 'Kelvin',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Reamur'),
-                    value: 'Reamur',
-                  ),
-                  DropdownMenuItem(
-                    child: Text('Fahrenheit'),
-                    value: 'Fahrenheit',
-                  ),
-                ],
-                onChanged: (value) {},
+              hasilKonversiSuhu(hasilPerhitungan: hasilPerhitungan),
+              tombolKonversiSuhu(
+                konversiSuhu: konversiSuhu,
               ),
               Container(
-                child: Column(
-                  children: [
-                    Text("Hasil"),
-                    Text('365'),
-                  ],
+                margin: const EdgeInsets.only(top: 20),
+                child: const Text(
+                  'Riwayat Konversi',
+                  style: TextStyle(fontSize: 18),
                 ),
               ),
-              SizedBox(
-                child: Container(
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        minimumSize: const Size.fromHeight(50),
-                      ),
-                      onPressed: () {},
-                      child: Text('Konversi Suhu')),
-                ),
-              ),
-              Container(
-                child: Text('Riwayat Konversi'),
-              )
+              riwayatSuhu(listHasil: listHasil)
             ],
           ),
         ),
