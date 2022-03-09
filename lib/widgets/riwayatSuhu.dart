@@ -6,7 +6,7 @@ class riwayatSuhu extends StatelessWidget {
     required this.listHasil,
   }) : super(key: key);
 
-  final List listHasil;
+  final List<String> listHasil;
 
   @override
   Widget build(BuildContext context) {

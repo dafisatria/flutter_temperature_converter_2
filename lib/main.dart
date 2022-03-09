@@ -21,7 +21,7 @@ class _MyAppState extends State<MyApp> {
   List<String> listSatuanSuhu = ['Kelvin', 'Reamur', 'Fahrenheit'];
   String selectedDropDown = 'Kelvin';
   int hasilPerhitungan = 0;
-  List listHasil = [];
+  List<String> listHasil = <String>[];
 
   void onDropDownChanged(Object? value) {
     return setState(() {
@@ -44,12 +44,7 @@ class _MyAppState extends State<MyApp> {
             break;
           default:
         }
-        listHasil.add("Konversi dari " +
-            etInput.text +
-            " Celcius ke " +
-            selectedDropDown +
-            "dengan hasil : " +
-            hasilPerhitungan.toString());
+        listHasil.add(selectedDropDown + " : " + hasilPerhitungan.toString());
       }
     });
   }
@@ -81,14 +76,14 @@ class _MyAppState extends State<MyApp> {
               tombolKonversiSuhu(
                 konversiSuhu: konversiSuhu,
               ),
-              // Container(
-              //   margin: const EdgeInsets.only(top: 20),
-              //   child: const Text(
-              //     'Riwayat Konversi',
-              //     style: TextStyle(fontSize: 18),
-              //   ),
-              // ),
-              // riwayatSuhu(listHasil: listHasil)
+              Container(
+                margin: const EdgeInsets.only(top: 20),
+                child: const Text(
+                  'Riwayat Konversi',
+                  style: TextStyle(fontSize: 18),
+                ),
+              ),
+              riwayatSuhu(listHasil: listHasil)
             ],
           ),
         ),
