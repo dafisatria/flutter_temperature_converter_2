@@ -6,11 +6,13 @@ class targetKonversiSuhu extends StatelessWidget {
     required this.selectedDropDown,
     required this.listSatuanSuhu,
     required this.onDropDownChanged,
+    required this.konversiSuhu,
   }) : super(key: key);
 
   final String selectedDropDown;
   final List<String> listSatuanSuhu;
   final Function onDropDownChanged;
+  final Function konversiSuhu;
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +26,7 @@ class targetKonversiSuhu extends StatelessWidget {
       }).toList(),
       onChanged: (value) {
         onDropDownChanged(value);
+        konversiSuhu();
       },
     );
   }

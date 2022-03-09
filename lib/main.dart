@@ -75,19 +75,20 @@ class _MyAppState extends State<MyApp> {
                 selectedDropDown: selectedDropDown,
                 listSatuanSuhu: listSatuanSuhu,
                 onDropDownChanged: onDropDownChanged,
+                konversiSuhu: konversiSuhu,
               ),
               hasilKonversiSuhu(hasilPerhitungan: hasilPerhitungan),
               tombolKonversiSuhu(
                 konversiSuhu: konversiSuhu,
               ),
-              Container(
-                margin: const EdgeInsets.only(top: 20),
-                child: const Text(
-                  'Riwayat Konversi',
-                  style: TextStyle(fontSize: 18),
-                ),
-              ),
-              riwayatSuhu(listHasil: listHasil)
+              // Container(
+              //   margin: const EdgeInsets.only(top: 20),
+              //   child: const Text(
+              //     'Riwayat Konversi',
+              //     style: TextStyle(fontSize: 18),
+              //   ),
+              // ),
+              // riwayatSuhu(listHasil: listHasil)
             ],
           ),
         ),
